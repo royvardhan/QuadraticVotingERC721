@@ -629,6 +629,11 @@
     table "^6.8.0"
     undici "^5.4.0"
 
+"@openzeppelin/contracts@^4.8.0-rc.1":
+  version "4.8.0-rc.1"
+  resolved "https://registry.yarnpkg.com/@openzeppelin/contracts/-/contracts-4.8.0-rc.1.tgz#a7497b9b7453736bd008aeb9e0150361ab383f80"
+  integrity sha512-1wK+KHAGDLwiBp+ezRVT3Nz1PdlBbnoNTkiQw5k/y8bfGXbCfB/pofaSjzJtTJMB1OzKmRBYTBveCttxGEdSqQ==
+
 "@scure/base@~1.1.0":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@scure/base/-/base-1.1.1.tgz#ebb651ee52ff84f420097055f4bf46cfba403938"
