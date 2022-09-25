@@ -59,7 +59,7 @@ contract QuadraticVotingERC721 {
         _;
     }
 
-    function createProposal(address _nftAddress,bytes calldata _description, uint _expirationTime) 
+    function createProposal(address _nftAddress, string calldata _description, uint _expirationTime) 
     external
     returns (uint) 
     {
@@ -68,7 +68,7 @@ contract QuadraticVotingERC721 {
         Proposal storage currentProposal = ProposalIdToProposal[proposalCount++];
         currentProposal.proposalForNFT = _nftAddress;
         currentProposal.creator = msg.sender;
-        currentProposal.description = _description;
+        currentProposal.description = abi.encode(_description);
         currentProposal.expirationTime = _expirationTime;
         currentProposal.status = ProposalStatus.IN_PROGRESS;
         return proposalCount;
