@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: UNLICENSED
 
-pragma solidity ^0.8.17;
+pragma solidity ^0.8.4;
 
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
@@ -39,11 +39,11 @@ contract QuadraticVotingERC721 {
     mapping(uint => Proposal) public ProposalIdToProposal;
 
 
-    modifier hasBalance(address _nftAddress, uint _tokens){
+    modifier hasBalance(address _nftAddress){
         require(_nftAddress != address(0));
         IERC721 erc721 = IERC721(_nftAddress);
         uint voterBalance = erc721.balanceOf(msg.sender);
-        require(voterBalance >= _tokens, "You dont have enough tokens to support your weight");
+        require(voterBalance >= 0, "You dont have enough tokens");
         _;
     }
 
@@ -59,7 +59,11 @@ contract QuadraticVotingERC721 {
         _;
     }
 
-    function createProposal(address _nftAddress,bytes calldata _description, uint _expirationTime) external returns (uint) {
+    function createProposal(address _nftAddress,bytes calldata _description, uint _expirationTime) 
+    external
+    returns (uint) 
+    {
+        require(checkProposalLimit(_nftAddress), "There are already 3 pending proposals");
         require(_expirationTime > block.timestamp, "Expiration time must be in future" );
         Proposal storage currentProposal = ProposalIdToProposal[proposalCount++];
         currentProposal.proposalForNFT = _nftAddress;
@@ -69,15 +73,17 @@ contract QuadraticVotingERC721 {
         currentProposal.status = ProposalStatus.IN_PROGRESS;
         return proposalCount;
     }
-    function castVote(uint _proposalId, address _nftAddress, uint _tokens, bool _vote) 
+
+    function castVote(uint _proposalId, bool _vote) 
     public 
-    hasBalance(_nftAddress, _tokens)
+    hasBalance(ProposalIdToProposal[_proposalId].proposalForNFT)
     validProposal(_proposalId)
     {
-        require(ProposalIdToProposal[_proposalId].proposalForNFT == _nftAddress);
         require(userHasVoted(_proposalId, msg.sender) != true, "User has already voted");
         Proposal storage currentProposal = ProposalIdToProposal[_proposalId];
-        uint weight = sqrt(_tokens);
+        IERC721 erc721 = IERC721(ProposalIdToProposal[_proposalId].proposalForNFT);
+        uint voterBalance = erc721.balanceOf(msg.sender);
+        uint weight = sqrt(voterBalance);
         currentProposal.voterInfo[msg.sender] = Voter(true, _vote, weight);
         currentProposal.voters.push(msg.sender);
     }
@@ -101,6 +107,7 @@ contract QuadraticVotingERC721 {
         
         ProposalIdToProposal[_proposalId].yesVotes = yesVotes;
         ProposalIdToProposal[_proposalId].noVotes = noVotes;
+
         return (yesVotes, noVotes);
     }
 
@@ -122,6 +129,21 @@ contract QuadraticVotingERC721 {
 
     function getProposalExpirationTime(uint _proposalId) internal view returns(uint) {
         return ProposalIdToProposal[_proposalId].expirationTime;
+    }
+
+    function checkProposalLimit(address _nftAddress) internal view returns(bool) {
+        uint _proposalForNftAddress;
+        if (proposalCount == 0) {
+            return true;
+        } else for (uint i = 0; i < proposalCount; i++) {
+            if (ProposalIdToProposal[i].proposalForNFT == _nftAddress) {
+                _proposalForNftAddress++;
+            } if (_proposalForNftAddress > 3) {
+                return false;
+            }
+        } return true;
+        
+        
     }
 
     function sqrt(uint x) internal pure returns (uint y) {
