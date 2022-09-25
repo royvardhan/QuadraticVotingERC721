@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
 contract QuadraticVotingERC721 {
 
-    uint proposalCount;
+    uint public proposalCount;
     address private owner;
 
     constructor() {
@@ -63,7 +63,7 @@ contract QuadraticVotingERC721 {
     external
     returns (uint) 
     {
-        require(checkProposalLimit(_nftAddress), "There are already 3 pending proposals");
+        require(checkProposalLimit(_nftAddress), "There are 3 pending proposals");
         require(_expirationTime > block.timestamp, "Expiration time must be in future" );
         Proposal storage currentProposal = ProposalIdToProposal[proposalCount++];
         currentProposal.proposalForNFT = _nftAddress;
@@ -115,7 +115,6 @@ contract QuadraticVotingERC721 {
     validProposal(_proposalId) 
     authUser(msg.sender, _proposalId)  
     {
-        require(msg.sender == owner || msg.sender == ProposalIdToProposal[_proposalId].creator);
         ProposalIdToProposal[_proposalId].status = ProposalStatus.ENDED;
     }
 
@@ -137,7 +136,9 @@ contract QuadraticVotingERC721 {
             return true;
         } else for (uint i = 0; i < proposalCount; i++) {
             if (ProposalIdToProposal[i].proposalForNFT == _nftAddress) {
-                _proposalForNftAddress++;
+                if (ProposalIdToProposal[i].status == ProposalStatus.IN_PROGRESS) {
+                    _proposalForNftAddress++;
+                }
             } if (_proposalForNftAddress > 3) {
                 return false;
             }
