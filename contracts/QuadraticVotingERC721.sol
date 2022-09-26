@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 contract QuadraticVotingERC721 {
 
     uint public proposalCount;
-    address private owner;
+    address public owner;
 
     constructor() {
         owner = msg.sender;
@@ -135,10 +135,8 @@ contract QuadraticVotingERC721 {
         if (proposalCount < 3) {
             return true;
         } else for (uint i = 0; i < proposalCount; i++) {
-            if (ProposalIdToProposal[i].proposalForNFT == _nftAddress) {
-                if (ProposalIdToProposal[i].status == ProposalStatus.IN_PROGRESS) {
-                    _proposalForNftAddress++;
-                }
+            if (ProposalIdToProposal[i].proposalForNFT == _nftAddress && ProposalIdToProposal[i].status == ProposalStatus.IN_PROGRESS) {
+                 _proposalForNftAddress++;
             } if (_proposalForNftAddress > 3) {
                 return false;
             }
