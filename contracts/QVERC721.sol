@@ -132,7 +132,7 @@ contract QuadraticVotingERC721 {
 
     function checkProposalLimit(address _nftAddress) internal view returns(bool) {
         uint _proposalForNftAddress;
-        if (proposalCount == 0) {
+        if (proposalCount < 3) {
             return true;
         } else for (uint i = 0; i < proposalCount; i++) {
             if (ProposalIdToProposal[i].proposalForNFT == _nftAddress) {
