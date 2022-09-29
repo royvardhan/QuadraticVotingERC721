@@ -130,19 +130,18 @@ contract QuadraticVotingERC721 {
         return ProposalIdToProposal[_proposalId].expirationTime;
     }
 
+
     function checkProposalLimit(address _nftAddress) internal view returns(bool) {
         uint _proposalForNftAddress;
-        if (proposalCount < 3) {
-            return true;
-        } else for (uint i = 0; i < proposalCount; i++) {
+        if (proposalCount > 2) {
+            for (uint i = 0; i < proposalCount; i++) {
             if (ProposalIdToProposal[i].proposalForNFT == _nftAddress && ProposalIdToProposal[i].status == ProposalStatus.IN_PROGRESS) {
                  _proposalForNftAddress++;
             } if (_proposalForNftAddress > 3) {
                 return false;
             }
-        } return true;
-        
-        
+        }
+    } else return true;
     }
 
     function sqrt(uint x) internal pure returns (uint y) {
@@ -153,6 +152,19 @@ contract QuadraticVotingERC721 {
             z = (x / z + z) / 2;
         }
     }
+
+
+    // function checkProposalLimit(address _nftAddress) internal view returns(bool) {
+    //     uint _proposalForNftAddress;
+    //     if (proposalCount < 3) {
+    //         return true;
+    //     } else for (uint i = 0; i < proposalCount; i++) {
+    //         if (ProposalIdToProposal[i].proposalForNFT == _nftAddress && ProposalIdToProposal[i].status == ProposalStatus.IN_PROGRESS) {
+    //              _proposalForNftAddress++;
+    //         } if (_proposalForNftAddress > 3) {
+    //             return false;
+    //         }
+    //     } return true;
 
 
 
