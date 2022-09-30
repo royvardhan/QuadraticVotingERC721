@@ -9,14 +9,17 @@ export default function Header() {
   //   //   }
 
   return (
-    <div className="bg-gradient-to-r from-cyan-500 to-blue-500 p-3 flex justify-end">
-      <h4 className="">Quadratic Voting NFTS</h4>
-      <ConnectButton
-        accountStatus={{
-          smallScreen: "avatar",
-          largeScreen: "small",
-        }}
-      />
+    <div>
+      <div className="space-x-[32.3%] bg-gradient-to-r from-cyan-500 to-blue-500 p-3 flex justify-end">
+        <h4 className="p-0.5 text-xl font-bold font-Josefin text-white">
+          Quadratic Voting NFTS
+        </h4>
+        <ConnectButton
+          chainStatus="none"
+          showBalance={false}
+          accountStatus="address"
+        />
+      </div>
     </div>
   );
 }
