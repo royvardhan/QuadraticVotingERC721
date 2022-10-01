@@ -8,8 +8,8 @@ import {
 
 export default function ProposalCards() {
   const { data: Prposals } = useContractRead({
-    addressOrName: "0xecb504d39723b0be0e3a9aa33d646642d1051ee1",
-    contractInterface: wagmigotchiABI,
+    addressOrName: "0xA72E82bc0D5E68ae218917F66f07D33fc47C198D",
+    contractInterface: abi,
     functionName: "ProposalIdToProposal",
     args: [1],
   });
