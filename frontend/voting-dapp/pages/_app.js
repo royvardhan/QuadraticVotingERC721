@@ -1,6 +1,6 @@
 import "../styles/globals.css";
-import Header from "./components/Header";
-import ProposalCards from "./components/ProposalCards";
+import Header from "../components/Header";
+import ProposalCards from "../components/ProposalCards";
 import "@rainbow-me/rainbowkit/styles.css";
 import {
   getDefaultWallets,
