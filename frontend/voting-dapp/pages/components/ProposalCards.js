@@ -1,6 +1,19 @@
 import React, { useState } from "react";
+import abi from ".../utils/abi";
+import {
+  useContractRead,
+  useContractWrite,
+  usePrepareContractWrite,
+} from "wagmi";
 
 export default function ProposalCards() {
+  const { data: Prposals } = useContractRead({
+    addressOrName: "0xecb504d39723b0be0e3a9aa33d646642d1051ee1",
+    contractInterface: wagmigotchiABI,
+    functionName: "ProposalIdToProposal",
+    args: [1],
+  });
+
   return (
     <div>
       <div className="flex justify-center ">
