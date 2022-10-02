@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import abi from "../utils/abi.json";
+import { ethers } from "ethers";
 import {
   useContractRead,
   useContractWrite,
@@ -8,6 +9,7 @@ import {
 
 export default function ProposalCards() {
   const [proposalCount, setProposalCount] = useState(0);
+  const [allProposals, addProposal] = useState([]);
 
   const { data: totalProposals } = useContractRead({
     addressOrName: "0xA72E82bc0D5E68ae218917F66f07D33fc47C198D",
@@ -17,10 +19,22 @@ export default function ProposalCards() {
   });
 
   React.useEffect(() => {
-    setProposalCount(totalProposals);
+    setProposalCount(parseInt(totalProposals));
+  }, [totalProposals]);
+
+  const { data: Proposal } = useContractRead({
+    addressOrName: "0xA72E82bc0D5E68ae218917F66f07D33fc47C198D",
+    contractInterface: abi,
+    functionName: "ProposalIdToProposal",
+    args: [0],
   });
 
-  console.log(proposalCount);
+  console.log(Proposal);
+
+  //   const number = parseInt(totalProposals);
+  //   setProposalCount(number);
+
+  // console.log(proposalCount);
 
   // const proposalData = Proposals.map((proposal) => {
   //   return (
