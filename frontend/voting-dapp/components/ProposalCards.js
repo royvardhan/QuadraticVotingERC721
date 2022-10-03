@@ -3,9 +3,11 @@ import abi from "../utils/abi.json";
 import { ethers } from "ethers";
 import {
   useContractRead,
+  useContractReads,
   useContractWrite,
   usePrepareContractWrite,
 } from "wagmi";
+import { useContractInfiniteReads, paginatedIndexesConfig } from "wagmi";
 
 export default function ProposalCards() {
   const [proposalCount, setProposalCount] = useState(0);
@@ -22,14 +24,21 @@ export default function ProposalCards() {
     setProposalCount(parseInt(totalProposals));
   }, [totalProposals]);
 
-  const { data: Proposal } = useContractRead({
-    addressOrName: "0xA72E82bc0D5E68ae218917F66f07D33fc47C198D",
-    contractInterface: abi,
-    functionName: "ProposalIdToProposal",
-    args: [0],
-  });
-
-  console.log(Proposal);
+  for (let i = 0; i < totalProposals; i++) {
+    const { data: Proposal } = useContractInfiniteReads({
+      addressOrName: "0xA72E82bc0D5E68ae218917F66f07D33fc47C198D",
+      cacheKey: "proposalsdata",
+      contractInterface: abi,
+      ...paginatedIndexesConfig(
+        (i) => ({
+          functionName: "tokenURI",
+          args: [i],
+        }),
+        { start: 0, perPage: 10, direction: "increment" }
+      ),
+    });
+    console.log(Proposal);
+  }
 
   //   const number = parseInt(totalProposals);
   //   setProposalCount(number);
