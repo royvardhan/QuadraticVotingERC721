@@ -10,7 +10,7 @@ export default function Header() {
 
   return (
     <div>
-      <div className="space-x-[32.3%] bg-gradient-to-r from-cyan-500 to-blue-500 p-3 flex justify-end">
+      <div className=" bg-gradient-to-r from-cyan-500 to-blue-500 p-3 flex justify-between">
         <h4 className="p-0.5 text-xl font-bold font-Josefin text-white">
           Quadratic Voting NFTS
         </h4>
