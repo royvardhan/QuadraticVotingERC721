@@ -44,8 +44,6 @@ export default function ProposalCards() {
     ),
   });
 
-  console.log(proposalsData.pages[0]);
-
   return (
     <div>
       <div className="flex justify-center ">
