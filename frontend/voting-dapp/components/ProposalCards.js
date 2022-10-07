@@ -43,6 +43,31 @@ export default function ProposalCards() {
       { start: 0, perPage: 10, direction: "increment" }
     ),
   });
+  console.log(proposalsData);
+
+  function ListProposals() {
+    return proposalsData.pages[0].map((proposal) => {
+      return (
+        <div className="flex justify-center ">
+          <div className="mt-10 w-auto p-5 backdrop-opacity-20 backdrop-invert bg-white/50 max-w-xl rounded-3xl">
+            <p className=" font-semibold">NFT Address: {proposal[0]}</p>
+            <p>Creator: {proposal[1]}</p>
+            <p>Proposal ID: null</p>
+            <p className="">
+              Description:
+              {arrayify(proposal[2])}
+            </p>
+            <p>Voters: 76</p>
+            <p>Status: In-Progress</p>
+          </div>
+        </div>
+      );
+    });
+  }
+  function arrayify(bytes) {
+    const arrayifiedVal = ethers.utils.arrayify(bytes);
+    return ethers.utils.defaultAbiCoder.decode(["string"], arrayifiedVal);
+  }
 
   return (
     <div>
@@ -75,6 +100,7 @@ export default function ProposalCards() {
           <p>Status: In-Progress</p>
         </div>
       </div>
+      <ListProposals />
     </div>
   );
 }
