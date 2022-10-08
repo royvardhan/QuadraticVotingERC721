@@ -46,63 +46,53 @@ export default function ProposalCards() {
   console.log(proposalsData);
 
   function ListProposals() {
-    return proposalsData.pages[0].map((proposal) => {
-      return (
-        <div className="flex justify-center ">
-          <div className="mt-10 w-auto p-5 backdrop-opacity-20 backdrop-invert bg-white/50 max-w-xl rounded-3xl">
-            <p className=" font-semibold">NFT Address: {proposal[0]}</p>
-            <p>Creator: {proposal[1]}</p>
-            <p>Proposal ID: null</p>
-            <p className="">
-              Description:
-              {arrayify(proposal[2])}
-            </p>
-            <p>Voters: 76</p>
-            <p>Status: In-Progress</p>
-          </div>
-        </div>
-      );
-    });
+    let count = -1;
+    for (let i = 0; i < proposalCount; i++) {
+      return proposalsData.pages[0].map((proposal) => {
+        if (proposal[5] > 1633704331) {
+          count++;
+          return (
+            <div className="flex justify-center ">
+              <div className="mt-10 w-auto p-5 backdrop-opacity-20 backdrop-invert bg-white/50 max-w-xl rounded-3xl">
+                <p className=" font-semibold">NFT Address: {proposal[0]}</p>
+                <p>Creator: {proposal[1]}</p>
+                <p>Proposal ID: {count}</p>
+                <p className="">
+                  Description:
+                  {String.fromCharCode(...arrayify(proposal[2]))}
+                </p>
+                <p>Expiration Time: {dateify(proposal[5])}</p>
+                <p>Yes Votes: {Number(proposal[3])}</p>
+                <p>No Votes: {Number(proposal[4])}</p>
+                <p>Status: {returnTrueFalse(proposal[5])}</p>
+              </div>
+            </div>
+          );
+        }
+      });
+    }
+  }
+  function returnTrueFalse(num) {
+    const currentTimestamp = Math.round(new Date().getTime() / 1000);
+    if (num < currentTimestamp) {
+      return "Ended";
+    } else return "In-Progress";
   }
   function arrayify(bytes) {
     const arrayifiedVal = ethers.utils.arrayify(bytes);
-    return ethers.utils.defaultAbiCoder.decode(["string"], arrayifiedVal);
+    return arrayifiedVal;
   }
 
-  return (
-    <div>
-      <div className="flex justify-center ">
-        <div className="mt-10 w-auto p-5 backdrop-opacity-20 backdrop-invert bg-white/50 max-w-xl rounded-3xl">
-          <p className=" font-semibold">
-            NFT Address: 0xdEE878E02c069c4c5AD37299f51E9C3Cd6c8CD4b
-          </p>
-          <p>Proposal ID: 578</p>
-          <p className="">
-            Description: Use funds from Community Wallet to buy BAYC NFTs from
-            Opensea and hold them till 2030.
-          </p>
-          <p>Voters: 76</p>
-          <p>Status: In-Progress</p>
-        </div>
-      </div>
+  function dateify(unixTimestamp) {
+    const milliseconds = unixTimestamp * 1000;
 
-      <div className="flex justify-center ">
-        <div className="mt-10 w-auto p-5 backdrop-opacity-20 backdrop-invert bg-white/50 max-w-xl rounded-3xl">
-          <p className=" font-semibold">
-            NFT Address: 0xdEE878E02c069c4c5AD37299f51E9C3Cd6c8CD4b
-          </p>
-          <p>Proposal ID: 578</p>
-          <p className="">
-            Description: Use funds from Community Wallet to buy BAYC NFTs from
-            Opensea and hold them till 2030.
-          </p>
-          <p>Voters: 76</p>
-          <p>Status: In-Progress</p>
-        </div>
-      </div>
-      <ListProposals />
-    </div>
-  );
+    const dateObject = new Date(milliseconds);
+
+    const humanDateFormat = dateObject.toLocaleString();
+    return humanDateFormat;
+  }
+
+  return <div>{proposalsData && <ListProposals />}</div>;
 }
 
 // for decoding bytes into strings  = ethers.utils.defaultAbiCoder.decode(["string"], cid)
