@@ -14,11 +14,17 @@ export default function Header() {
         <h4 className="p-0.5 text-xl font-bold font-Josefin text-white">
           Quadratic Voting NFTS
         </h4>
-        <ConnectButton
-          chainStatus="none"
-          showBalance={false}
-          accountStatus="address"
-        />
+        <div className="flex flex-row">
+          <button className="mr-10 rounded-xl font-semibold font-Josefin text-white bg-black px-3 py-1  ">
+            Create Proposal
+          </button>
+
+          <ConnectButton
+            chainStatus="none"
+            showBalance={false}
+            accountStatus="address"
+          />
+        </div>
       </div>
     </div>
   );

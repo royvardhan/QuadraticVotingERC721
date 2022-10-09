@@ -10,6 +10,10 @@ module.exports = {
         Josefin: ["Josefin Sans"],
       },
     },
+    minWidth: {
+      "1/2": "50%",
+      576: "576px",
+    },
   },
   plugins: [],
 };
