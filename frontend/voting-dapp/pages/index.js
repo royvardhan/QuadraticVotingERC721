@@ -1,7 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
 import _App from "./_app";
-import { BrowserRouter as Router } from "react-router-dom";
 
 export default function Home() {
   return (

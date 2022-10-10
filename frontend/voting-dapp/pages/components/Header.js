@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { Link } from "react-router-dom";
 
 export default function Header() {
   //   const [text, setText] = useState(true);

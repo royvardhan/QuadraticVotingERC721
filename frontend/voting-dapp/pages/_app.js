@@ -1,7 +1,9 @@
 import "../styles/globals.css";
-import Header from "../components/Header";
-import ProposalCards from "../components/ProposalCards";
-import CreateProposal from "../components/CreateProposal";
+import Header from "./components/Header";
+import ProposalCards from "./components/ProposalCards";
+import CreateProposal from "./components/CreateProposal";
+import { useRouter } from "next/router";
+import Link from "next/link";
 import "@rainbow-me/rainbowkit/styles.css";
 import {
   getDefaultWallets,
@@ -15,11 +17,6 @@ const { chains, provider } = configureChains(
   [chain.mainnet, chain.goerli, chain.polygon, chain.optimism, chain.arbitrum],
   [alchemyProvider({ apiKey: process.env.ALCHEMY_ID }), publicProvider()]
 );
-import {
-  Route,
-  Routes as Switch,
-  BrowserRouter as Router,
-} from "react-router-dom";
 
 const { connectors } = getDefaultWallets({
   appName: "My RainbowKit App",
@@ -41,7 +38,7 @@ function MyApp() {
         theme={midnightTheme()}
       >
         <Header />
-        <CreateProposal />
+        {/* <CreateProposal /> */}
         <ProposalCards />
       </RainbowKitProvider>
     </WagmiConfig>
