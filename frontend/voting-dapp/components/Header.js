@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   //   const [text, setText] = useState(true);
@@ -15,7 +16,7 @@ export default function Header() {
           Quadratic Voting NFTS
         </h4>
         <div className="flex flex-row">
-          <button className="mr-10 rounded-xl font-semibold font-Josefin text-white bg-black px-3 py-1  ">
+          <button className="mr-5 rounded-xl font-semibold font-Josefin text-white bg-black px-3 py-1  ">
             Create Proposal
           </button>
 
