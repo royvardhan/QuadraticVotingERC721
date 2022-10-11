@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@rainbow-me/rainbowkit": "^0.6.2",
+    "antd": "^4.23.5",
     "dotenv": "^16.0.3",
     "ethers": "^5.7.1",
     "next": "12.3.1",

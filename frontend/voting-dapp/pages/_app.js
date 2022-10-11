@@ -2,6 +2,7 @@ import "../styles/globals.css";
 import Header from "./components/Header";
 import ProposalCards from "./components/ProposalCards";
 import CreateProposal from "./components/CreateProposal";
+
 import { useRouter } from "next/router";
 import Link from "next/link";
 import "@rainbow-me/rainbowkit/styles.css";
@@ -38,8 +39,8 @@ function MyApp() {
         theme={midnightTheme()}
       >
         <Header />
-        {/* <CreateProposal /> */}
         <ProposalCards />
+        <div className="mt-10"></div>
       </RainbowKitProvider>
     </WagmiConfig>
   );
