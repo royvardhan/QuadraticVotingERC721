@@ -14,14 +14,12 @@ export default function CreateProposal() {
   const [expDate, setExpDate] = useState(0);
 
   const { config } = usePrepareContractWrite({
-    addressOrName: "0xA72E82bc0D5E68ae218917F66f07D33fc47C198D",
+    addressOrName: "0xc937D7e74ba4c26A86540804355c863d43189358",
     contractInterface: abi,
     functionName: "createProposal",
     args: [nftAddress, description, expDate],
   });
   const { data, isLoading, isSuccess, write } = useContractWrite(config);
-
-  console.log(expDate);
 
   return (
     <div className="flex justify-center font-Josefin font-light">

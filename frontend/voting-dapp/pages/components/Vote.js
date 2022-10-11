@@ -14,7 +14,7 @@ export default function CreateProposal() {
   const [voteBool, setVoteBool] = useState(false);
 
   const { config } = usePrepareContractWrite({
-    addressOrName: "0xA72E82bc0D5E68ae218917F66f07D33fc47C198D",
+    addressOrName: "0xc937D7e74ba4c26A86540804355c863d43189358",
     contractInterface: abi,
     functionName: "castVote",
     args: [proposalId, voteBool],
@@ -45,6 +45,7 @@ export default function CreateProposal() {
           <label className="mt-2">
             Vote: <label className="ml-16">Yes:</label>
             <input
+              onClick={() => setVoteBool(true)}
               id="Yes"
               className="ml-2"
               type="checkbox"
@@ -52,6 +53,7 @@ export default function CreateProposal() {
             ></input>
             <label className="ml-2">No:</label>
             <input
+              onClick={() => setVoteBool(false)}
               id="No"
               className="ml-2"
               type="checkbox"

@@ -37,8 +37,8 @@ export default function Header() {
           />
         </div>
       </div>
-      {/* {!voteComp && <CreateProposal />} */}
-      <Vote />
+      {!voteComp && <CreateProposal />}
+      {voteComp && <Vote />}
     </div>
   );
 }

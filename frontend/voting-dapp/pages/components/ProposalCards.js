@@ -25,18 +25,11 @@ export default function ProposalCards() {
     setProposalCount(parseInt(totalProposals));
   }, [totalProposals]);
 
-  // const { data: Proposal } = useContractRead({
-  //   addressOrName: "0xA72E82bc0D5E68ae218917F66f07D33fc47C198D",
-  //   contractInterface: abi,
-  //   functionName: "ProposalIdToProposal",
-  //   args: [0],
-  // });
-
   const { data: proposalsData, fetchNextPage } = useContractInfiniteReads({
     cacheKey: "proposals",
     ...paginatedIndexesConfig(
       (index) => ({
-        addressOrName: "0xA72E82bc0D5E68ae218917F66f07D33fc47C198D",
+        addressOrName: "0xc937D7e74ba4c26A86540804355c863d43189358",
         contractInterface: abi,
         functionName: "ProposalIdToProposal",
         args: [index],
