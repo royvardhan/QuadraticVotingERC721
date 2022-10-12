@@ -29,7 +29,7 @@ export default function ProposalCards() {
     cacheKey: "proposals",
     ...paginatedIndexesConfig(
       (index) => ({
-        addressOrName: "0xc937D7e74ba4c26A86540804355c863d43189358",
+        addressOrName: "0xa182fD2fF6D5C09a7587734dff0Ec2b6e86Af9c8",
         contractInterface: abi,
         functionName: "ProposalIdToProposal",
         args: [index],
@@ -40,7 +40,6 @@ export default function ProposalCards() {
   console.log(proposalsData);
 
   function ListProposals() {
-    let count = -1;
     for (let i = 0; i < proposalCount; i++) {
       return proposalsData.pages[0]
         .filter((proposals) => {
@@ -54,13 +53,15 @@ export default function ProposalCards() {
         })
         .map((proposal) => {
           if (proposal[5] > 1633704331) {
-            count++;
             return (
               <div className="flex justify-center font-Josefin font-light">
                 <div className="mt-10 p-5 backdrop-opacity-20 backdrop-invert bg-white/20 max-w-xl rounded-3xl min-w-576">
-                  <p className=" font-medium">NFT Address: {proposal[0]}</p>
+                  <p className=" font-bold">NFT Address: {proposal[0]}</p>
+                  <p className=" font-medium">
+                    Total Voters: {Number(proposal[8])}
+                  </p>
                   <p>Creator: {proposal[1]}</p>
-                  <p>Proposal ID: {count}</p>
+                  <p>Proposal ID: {Number(proposal[7])}</p>
                   <p className="">
                     Description:
                     {String.fromCharCode(...arrayify(proposal[2]))}

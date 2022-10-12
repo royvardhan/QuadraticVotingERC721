@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import abi from "../utils/abi.json";
-import { ethers } from "ethers";
-import { Switch } from "antd";
 import {
   useContractRead,
   useContractReads,
@@ -11,19 +9,15 @@ import {
 
 export default function CreateProposal() {
   const [proposalId, setproposalId] = useState(0);
-  const [voteBool, setVoteBool] = useState(false);
+  const [voteBool, setVoteBool] = useState(null);
 
   const { config } = usePrepareContractWrite({
-    addressOrName: "0xc937D7e74ba4c26A86540804355c863d43189358",
+    addressOrName: "0xa182fD2fF6D5C09a7587734dff0Ec2b6e86Af9c8",
     contractInterface: abi,
     functionName: "castVote",
     args: [proposalId, voteBool],
   });
   const { data, isLoading, isSuccess, write } = useContractWrite(config);
-
-  function setVoteBoolFunc(bool) {
-    setVoteBool(bool);
-  }
 
   return (
     <div className="flex justify-center font-Josefin font-light">

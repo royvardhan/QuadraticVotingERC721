@@ -14,7 +14,7 @@ export default function CreateProposal() {
   const [expDate, setExpDate] = useState(0);
 
   const { config } = usePrepareContractWrite({
-    addressOrName: "0xc937D7e74ba4c26A86540804355c863d43189358",
+    addressOrName: "0xa182fD2fF6D5C09a7587734dff0Ec2b6e86Af9c8",
     contractInterface: abi,
     functionName: "createProposal",
     args: [nftAddress, description, expDate],

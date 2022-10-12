@@ -8,7 +8,7 @@ async function main() {
   const contractVoting = await contractFactory.deploy();
   await contractVoting.deployed();
   console.log("Contract deployed at: " + (await contractVoting.address));
-  await verify(contractVoting.address, []);
+  // await verify(contractVoting.address, []);
 }
 
 async function verify(contractAddress, args) {

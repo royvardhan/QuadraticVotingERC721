@@ -10,6 +10,9 @@ module.exports = {
       url: process.env.goerli_api,
       accounts: [process.env.account],
     },
+    hardhat: {
+      chainId: 1337,
+    },
   },
   etherscan: {
     apiKey: {

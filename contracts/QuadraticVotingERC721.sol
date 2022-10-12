@@ -27,6 +27,8 @@ contract QuadraticVotingERC721 {
         uint expirationTime;
         ProposalStatus status;
         address[] voters;
+        uint proposalId;
+        uint totalVoters;
         mapping(address => Voter) voterInfo;
     }
 
@@ -63,9 +65,11 @@ contract QuadraticVotingERC721 {
     external
     returns (uint) 
     {
-        require(checkProposalLimit(_nftAddress), "There are 3 pending proposals");
+        // require(checkProposalLimit(_nftAddress), "There are 3 pending proposals"); // Need to check this require on final build
         require(_expirationTime > block.timestamp, "Expiration time must be in future" );
-        Proposal storage currentProposal = ProposalIdToProposal[proposalCount++];
+        proposalCount++;
+        Proposal storage currentProposal = ProposalIdToProposal[proposalCount];
+        currentProposal.proposalId = proposalCount;
         currentProposal.proposalForNFT = _nftAddress;
         currentProposal.creator = msg.sender;
         currentProposal.description = abi.encode(_description);
@@ -86,9 +90,11 @@ contract QuadraticVotingERC721 {
         uint weight = sqrt(voterBalance);
         currentProposal.voterInfo[msg.sender] = Voter(true, _vote, weight);
         currentProposal.voters.push(msg.sender);
+        currentProposal.totalVoters = currentProposal.voters.length;
+        countVotes(_proposalId);
     }
 
-    function countVotes(uint _proposalId) external
+    function countVotes(uint _proposalId) public
     validProposal(_proposalId)
     returns (uint, uint)
     {
